@@ -1,0 +1,19 @@
+<ion-view view-title="Tasks">
+
+  <ion-nav-buttons side="right">
+    <a href="#/tasks/new" class="button button-clear">New Task</a>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="task in tasksCtrl.tasks" type="item-text-wrap" class="item item-button-right">
+        <h2>{{task.get('body')}}</h2>
+        <button class="button button-positive" ng-if="!task.get('isDone')" ng-click="tasksCtrl.completeTask(task)">
+          <i class="icon ion-checkmark-round"></i>
+        </button>
+        <button class="button button-balanced" ng-if="task.get('isDone')" ng-click="tasksCtrl.uncompleteTask(task)">
+          <i class="icon ion-checkmark-circled"></i>
+        </button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
