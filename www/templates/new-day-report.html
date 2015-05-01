@@ -1,0 +1,54 @@
+<ion-view view-title="Reports">
+  <ion-content>
+    <div class="card">
+      <div class="item item-icon-left assertive">
+        <i class="icon ion-clipboard"></i>
+        <h2>New report</h2>
+      </div>
+
+      <div class="item item-divider balanced">
+        What was done or learn today?
+      </div>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <textarea ng-model="newDayReportCtrl.newReport.whatDoneAndLearn" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="item item-divider royal">
+        How did you improve yours life today?
+      </div>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <textarea ng-model="newDayReportCtrl.newReport.whatBecomesBetter" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="item item-divider dark">
+        Did you done yours planed tasks? Why if not
+      </div>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <textarea ng-model="newDayReportCtrl.newReport.isPlanDone" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="item item-divider assertive">
+        What was bad today? Why? How we can do this better?
+      </div>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <textarea ng-model="newDayReportCtrl.newReport.whatWasBad" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="list list-inset">
+        <div class="button-bar">
+          <button class="button button-block button-positive" ng-click="newDayReportCtrl.createReport()">
+            Create
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

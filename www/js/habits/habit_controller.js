@@ -2,15 +2,13 @@
 
 var module = angular.module('starter.controllers');
 
-module.controller('HabitController', ['$scope', '$state', '$stateParams',  function($scope, $state, $stateParams) {
+module.controller('HabitController', ['$scope', '$state', '$stateParams', 'userAccess', function($scope, $state, $stateParams, userAccess) {
+  userAccess.checkAndRedirect();
+
   this.habit = null;
   this.habitFailures = [];
 
   var self = this;
-
-  if (!Parse.User.current()) {
-    $state.go('app.sign-in');
-  }
 
   var _loadHabitAndFailures = function() {
     var Habit = Parse.Object.extend('Habit');

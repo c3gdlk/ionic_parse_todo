@@ -43,19 +43,5 @@
         </div>
       </div>
     </div>
-
-    <div class="list list-inset" ng-show="term.edit">
-      <label class="item item-input">
-        <input type="text" placeholder="Reason" ng-model="habit.reason">
-      </label>
-      <div class="button-bar">
-        <button class="button button-block button-positive" ng-click="habitsCtrl.myBad(habit); $event.stopPropagation();">
-          I'm failured
-        </button>
-        <button class="button button-block" ng-click="habitsCtrl.closeMyBad(habit); $event.stopPropagation();">
-          Cancel
-        </button>
-      </div>
-    </div>
   </ion-content>
 </ion-view>

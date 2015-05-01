@@ -2,14 +2,12 @@
 
 var module = angular.module('starter.controllers');
 
-module.controller('NewGlossaryController', ['$scope', '$state', function($scope, $state) {
+module.controller('NewGlossaryController', ['$scope', '$state', 'userAccess', function($scope, $state, userAccess) {
+  userAccess.checkAndRedirect();
+
   this.newGlossary = {badWords: null, goodWords: null, user: null};
 
   var self = this;
-
-  if (!Parse.User.current()) {
-    $state.go('app.sign-in');
-  }
 
   this.createTerm = function() {
     var Glossary = Parse.Object.extend('Glossary');

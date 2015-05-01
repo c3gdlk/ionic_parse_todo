@@ -2,14 +2,12 @@
 
 var module = angular.module('starter.controllers');
 
-module.controller('NewHabitController', ['$scope', '$state', function($scope, $state) {
+module.controller('NewHabitController', ['$scope', '$state', 'userAccess', function($scope, $state, userAccess) {
+  userAccess.checkAndRedirect();
+
   this.newHabit = '';
 
   var self = this;
-
-  if (!Parse.User.current()) {
-    $state.go('app.sign-in');
-  }
 
   this.createHabit = function() {
     var Habit = Parse.Object.extend('Habit');

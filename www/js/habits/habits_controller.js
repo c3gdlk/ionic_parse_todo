@@ -2,16 +2,14 @@
 
 var module = angular.module('starter.controllers');
 
-module.controller('HabitsController', ['$scope', '$state', function($scope, $state) {
+module.controller('HabitsController', ['$scope', '$state', 'userAccess', function($scope, $state, userAccess) {
+  userAccess.checkAndRedirect();
+
   this.habits = [];
   this.habitFailures = [];
   this._tab = 'habits';
 
   var self = this;
-
-  if (!Parse.User.current()) {
-    $state.go('app.sign-in');
-  }
 
   var _loadHabits = function() {
     var Habit = Parse.Object.extend('Habit');
@@ -63,7 +61,6 @@ module.controller('HabitsController', ['$scope', '$state', function($scope, $sta
   }
 
   this.showHabit = function(habit) {
-    console.log('Show Habit');
     if (!habit.bad) {
       $state.go('app.habits-show', {id: habit.id});
     }
