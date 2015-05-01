@@ -1,0 +1,56 @@
+<ion-view view-title="Habits">
+
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button home-button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a href="#/habits/new" class="button button-clear">Add Habit</a>
+  </ion-nav-buttons>
+
+  <ion-header-bar class="bar bar-subheader">
+    <div class="tabs">
+      <a class="tab-item" ng-click="habitsCtrl.tab('habits')">
+        Habits
+      </a>
+      <a class="tab-item" ng-click="habitsCtrl.tab('failures')">
+        Failures
+      </a>
+    </div>
+  </ion-header-bar>
+  <ion-content class="has-subheader">
+    <div ng-show="habitsCtrl._tab == 'habits'">
+      <ion-list>
+        <ion-item ng-repeat="habit in habitsCtrl.habits" type="item-text-wrap" class="item item-button-right" ng-click="habitsCtrl.showHabit(habit)">
+          <h2>{{habit.get('title')}}</h2>
+          <button class="button button-assertive" ng-click="habitsCtrl.showMyBad(habit); $event.stopPropagation();">
+            My Bad
+          </button>
+
+          <div class="list list-inset" ng-show="habit.bad">
+            <label class="item item-input">
+              <input type="text" placeholder="Reason" ng-model="habit.reason">
+            </label>
+            <div class="button-bar">
+              <button class="button button-block button-positive" ng-click="habitsCtrl.myBad(habit); $event.stopPropagation();">
+                I'm failured
+              </button>
+              <button class="button button-block" ng-click="habitsCtrl.closeMyBad(habit); $event.stopPropagation();">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div ng-show="habitsCtrl._tab == 'failures'">
+      <ion-list>
+        <ion-item ng-repeat="habitFailure in habitsCtrl.habitFailures" type="item-text-wrap" class="item item-button-right">
+          <h2>{{habitFailure.get('body')}}</h2>
+          <p>{{habitFailure.get('habit').get('title') }} </p>
+          <span class="item-note">{{ habitFailure.createdAt | formattedDate }}</span>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-view>
