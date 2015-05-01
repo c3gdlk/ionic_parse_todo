@@ -22,13 +22,11 @@ module.controller('MainController', ['$scope', '$state', '$ionicSideMenuDelegate
   }
 }]);
 
-module.controller('TasksController', ['$scope', '$state', function($scope, $state) {
+module.controller('TasksController', ['$scope', '$state', 'userAccess', function($scope, $state, userAccess) {
+  userAccess.checkAndRedirect();
+
   this.tasks = [];
   var self = this;
-
-  if (!Parse.User.current()) {
-    $state.go('app.sign-in');
-  }
 
   var loadTasks = function() {
     var Task = Parse.Object.extend("Task");
@@ -51,11 +49,14 @@ module.controller('TasksController', ['$scope', '$state', function($scope, $stat
   };
 
   $scope.$on('$ionicView.enter', function () {
+    userAccess.checkAndRedirect();
     loadTasks();
   });
 }]);
 
-module.controller('NewTaskController', ['$scope', '$state', function($scope, $state) {
+module.controller('NewTaskController', ['$scope', '$state', 'userAccess', function($scope, $state, userAccess) {
+  userAccess.checkAndRedirect();
+
   this.newTask = {body: '', isDone: false};
   var self = this;
 

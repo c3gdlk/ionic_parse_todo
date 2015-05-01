@@ -90,5 +90,23 @@ angular.module('starter')
           }
         }
       })
+      .state('app.day-reports', {
+        url: '/day-reports',
+        views: {
+          'app': {
+            templateUrl: 'templates/day-reports.html',
+            controller: 'DayReportsController as dayReportsCtrl'
+          }
+        }
+      })
+      .state('app.day-reports-new', {
+        url: '/day-reports/new',
+        views: {
+          'app': {
+            templateUrl: 'templates/new-day-report.html',
+            controller: 'NewDayReportController as newDayReportCtrl'
+          }
+        }
+      })
     $urlRouterProvider.otherwise('/tasks');
   }]);

@@ -2,14 +2,12 @@
 
 var module = angular.module('starter.controllers');
 
-module.controller('GlossaryController', ['$scope', '$state', function($scope, $state) {
+module.controller('GlossaryController', ['$scope', '$state', 'userAccess', function($scope, $state, userAccess) {
   this.glossary = [];
 
   var self = this;
 
-  if (!Parse.User.current()) {
-    $state.go('app.sign-in');
-  }
+  userAccess.checkAndRedirect();
 
   var _loadGlossary = function() {
     var Glossary = Parse.Object.extend('Glossary');
@@ -38,12 +36,10 @@ module.controller('GlossaryController', ['$scope', '$state', function($scope, $s
   }
 
   this.update = function(glossary) {
-    console.log(glossary.attributes)
     glossary.set('badWords', glossary.badWords);
     glossary.set('goodWords', glossary.goodWords);
 
     glossary.save().then(function() {
-      console.log('SUCCESS');
       $scope.$apply(function() {
         self.cancelEdit(glossary);
       })

@@ -2,7 +2,7 @@
 
 var module = angular.module('starter.controllers');
 
-module.controller('SignInController', ['$scope', '$state', function($scope, $state) {
+module.controller('SignInController', ['$scope', '$state', 'blockAppUntilReport', function($scope, $state, blockAppUntilReport) {
   this.errors = '';
   this.login = '';
   this.password = '';

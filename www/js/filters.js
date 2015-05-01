@@ -4,8 +4,7 @@ angular.module('starter.filters', []);
 
 var module = angular.module('starter.filters');
 
-
-module.filter("formattedDate", function ($filter) {
+module.filter("formattedDate", ['$filter', function ($filter) {
   return function (date) {
     var result = ''
 
@@ -22,4 +21,4 @@ module.filter("formattedDate", function ($filter) {
 
     return result;
   };
-})
+}])
