@@ -45,5 +45,32 @@ angular.module('starter')
           }
         }
       })
+      .state('app.habits', {
+        url: '/habits',
+        views: {
+          'app': {
+            templateUrl: 'templates/habits.html',
+            controller: 'HabitsController as habitsCtrl'
+          }
+        }
+      })
+      .state('app.habits-new', {
+        url: '/habits/new',
+        views: {
+          'app': {
+            templateUrl: 'templates/new-habit.html',
+            controller: 'NewHabitController as newHabitCtrl'
+          }
+        }
+      })
+      .state('app.habits-show', {
+        url: '/habits/:id',
+        views: {
+          'app': {
+            templateUrl: 'templates/show-habit.html',
+            controller: 'HabitController as habitCtrl'
+          }
+        }
+      })
     $urlRouterProvider.otherwise('/tasks');
   }]);

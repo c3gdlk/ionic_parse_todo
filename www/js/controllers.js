@@ -13,8 +13,12 @@ module.controller('MainController', ['$scope', '$state', '$ionicSideMenuDelegate
 
   $scope.signOut = function() {
     Parse.User.logOut();
-    $ionicSideMenuDelegate.toggleLeft();
+    $scope.toggleLeftSideMenu();
     $state.go('app.sign-in');
+  }
+
+  $scope.toggleLeftSideMenu = function() {
+    $ionicSideMenuDelegate.toggleLeft();
   }
 }]);
 

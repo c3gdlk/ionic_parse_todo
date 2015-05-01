@@ -1,0 +1,23 @@
+<ion-view view-title="Habits">
+
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button home-button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a href="#/habits/new" class="button button-clear">Add Habit</a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap" ng-show="habitCtrl.habit" >
+        {{ habitCtrl.habit.get('title') }}
+      </div>
+    </div>
+
+    <ion-list>
+      <ion-item ng-repeat="habitFailure in habitCtrl.habitFailures" type="item-text-wrap" class="item item-button-right">
+        {{habitFailure.get('body')}}
+        <span class="item-note">{{ habitFailure.createdAt | formattedDate }}</span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
