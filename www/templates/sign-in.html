@@ -1,0 +1,25 @@
+<ion-view view-title="Sign In" hide-nav-bar="true">
+
+  <ion-content>
+    <div class="card" ng-show="signInCtrl.errors.length">
+      <div class="item item-text-wrap" >
+        {{ signInCtrl.errors }}
+      </div>
+    </div>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input type="text" placeholder="Email" ng-model="signInCtrl.login">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password" ng-model="signInCtrl.password">
+      </label>
+      <button class="button button-block button-positive" ng-click="signInCtrl.signIn()">
+        Sign In
+      </button>
+      <p>
+        Haven't accout yet? <a href="/#/sign-up">Sign Up now</a>
+      </p>
+    </div>
+  </ion-content>
+</ion-view>

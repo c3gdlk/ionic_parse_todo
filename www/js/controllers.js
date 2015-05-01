@@ -4,9 +4,27 @@ angular.module('starter.controllers', []);
 
 var module = angular.module('starter.controllers');
 
-module.controller('TasksController', ['$scope', function($scope) {
+module.controller('MainController', ['$scope', '$state', '$ionicSideMenuDelegate', function($scope, $state, $ionicSideMenuDelegate) {
+  $scope.isLeftSidebarEnabled = function() {
+    var disabledStates = ['app.sign-in', 'app.sign-up'];
+
+    return disabledStates.indexOf($state.current.name) == -1;
+  }
+
+  $scope.signOut = function() {
+    Parse.User.logOut();
+    $ionicSideMenuDelegate.toggleLeft();
+    $state.go('app.sign-in');
+  }
+}]);
+
+module.controller('TasksController', ['$scope', '$state', function($scope, $state) {
   this.tasks = [];
   var self = this;
+
+  if (!Parse.User.current()) {
+    $state.go('app.sign-in');
+  }
 
   var loadTasks = function() {
     var Task = Parse.Object.extend("Task");

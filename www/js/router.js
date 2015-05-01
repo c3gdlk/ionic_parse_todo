@@ -6,7 +6,8 @@ angular.module('starter')
       .state('app', {
         url: '',
         abstract: true,
-        templateUrl: 'templates/views.html'
+        templateUrl: 'templates/views.html',
+        controller: 'MainController'
       })
       .state('app.tasks', {
         url: '/tasks',
@@ -23,6 +24,24 @@ angular.module('starter')
           'app': {
             templateUrl: 'templates/new-task.html',
             controller: 'NewTaskController as newTaskCtrl'
+          }
+        }
+      })
+      .state('app.sign-in', {
+        url: '/sign-in',
+        views: {
+          'app': {
+            templateUrl: 'templates/sign-in.html',
+            controller: 'SignInController as signInCtrl'
+          }
+        }
+      })
+      .state('app.sign-up', {
+        url: '/sign-up',
+        views: {
+          'app': {
+            templateUrl: 'templates/sign-up.html',
+            controller: 'SignUpController as signUpCtrl'
           }
         }
       })
