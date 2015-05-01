@@ -72,5 +72,23 @@ angular.module('starter')
           }
         }
       })
+      .state('app.glossary', {
+        url: '/glossary',
+        views: {
+          'app': {
+            templateUrl: 'templates/glossary.html',
+            controller: 'GlossaryController as glossaryCtrl'
+          }
+        }
+      })
+      .state('app.glossary-new', {
+        url: '/glossary/new',
+        views: {
+          'app': {
+            templateUrl: 'templates/new-glossary.html',
+            controller: 'NewGlossaryController as newGlossaryCtrl'
+          }
+        }
+      })
     $urlRouterProvider.otherwise('/tasks');
   }]);
