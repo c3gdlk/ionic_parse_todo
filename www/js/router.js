@@ -108,5 +108,14 @@ angular.module('starter')
           }
         }
       })
+      .state('app.selfies', {
+        url: '/selfies',
+        views: {
+          'app': {
+            templateUrl: 'templates/selfies.html',
+            controller: 'SelfiesController as selfiesCtrl'
+          }
+        }
+      })
     $urlRouterProvider.otherwise('/tasks');
   }]);
