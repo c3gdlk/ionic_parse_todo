@@ -11,25 +11,12 @@ module.controller('HabitController', ['$scope', '$state', '$stateParams', 'userA
   var self = this;
 
   var _loadHabitAndFailures = function() {
-    var Habit = Parse.Object.extend('Habit');
-    var query = new Parse.Query(Habit);
-    query.equalTo("user", Parse.User.current());
-    query.equalTo("objectId", $stateParams.id);
-
-    query.first().then(function(habit) {
-      var HabitFailure = Parse.Object.extend('HabitFailure');
-      var query = new Parse.Query(HabitFailure);
-      query.equalTo("habit", habit);
-      query.limit(500);
-
-      query.find().then(function(habitFailures) {
-        $scope.$apply(function() {
-          self.habit = habit;
-          self.habitFailures = habitFailures;
-        })
-      });
-
-    })
+    Parse.Cloud.run("habitWithFailures", {id: $stateParams.id}).then(function(result) {
+      $scope.$apply(function() {
+        self.habit = result.habit;
+        self.habitFailures = result.habitFailures;
+      })
+    });
   }
 
   _loadHabitAndFailures();

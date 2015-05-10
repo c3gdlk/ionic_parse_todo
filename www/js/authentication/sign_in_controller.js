@@ -32,20 +32,15 @@ module.controller('SignInController', ['$scope', '$state', 'blockAppUntilReport'
       _login(this.login, this.password);
     }
     else {
-      var query = new Parse.Query(Parse.User);
-      query.equalTo("email", this.login);
-      query.first({
-        success: function (user) {
-          if (user)
-            _login(user.get('username'), self.password);
-          else
-            $scope.$apply(function(){
-              self.errors = "Can't find user with this email";
-              self.password = '';
-              self.login = '';
-            });
-        }
-      });
+      Parse.Cloud.run("findUserByEmail", {email: this.login}).then(function(user) {
+        _login(user.get('username'), self.password);
+      }, function(error) {
+        $scope.$apply(function(){
+          self.errors = "Can't find user with this email";
+          self.password = '';
+          self.login = '';
+        });
+      })
     }
   }
 

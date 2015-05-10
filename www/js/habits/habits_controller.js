@@ -14,30 +14,17 @@ module.controller('HabitsController', ['$scope', '$state', function($scope, $sta
   }
 
   var _loadHabits = function() {
-    var Habit = Parse.Object.extend('Habit');
-    var query = new Parse.Query(Habit);
-    query.equalTo("user", Parse.User.current());
-    query.notEqualTo("hidden", true);
-    query.limit(500);
-    query.find().then(function(habits) {
-      for (var i in habits) {
-        habits[i].bad = false;
-        habits[i].reason = '';
+    Parse.Cloud.run("habitList").then(function(result) {
+      for (var i in result.habits) {
+        result.habits[i].bad = false;
+        result.habits[i].reason = '';
       }
 
-      var HabitFailure = Parse.Object.extend('HabitFailure');
-      var query = new Parse.Query(HabitFailure);
-      query.equalTo("user", Parse.User.current());
-      query.include("habit")
-      query.limit(500);
-
-      query.find().then(function(habitFailures) {
-        $scope.$apply(function() {
-          self.habits = habits;
-          self.habitFailures = habitFailures;
-        })
-      });
-    })
+      $scope.$apply(function() {
+        self.habits = result.habits;
+        self.habitFailures = result.habitFailures;
+      })
+    });
   }
 
   this.showMyBad = function(habit) {
@@ -50,10 +37,7 @@ module.controller('HabitsController', ['$scope', '$state', function($scope, $sta
 
   this.myBad = function(habit) {
     if (habit.reason) {
-      var HabitFailure = Parse.Object.extend('HabitFailure');
-      var habitFailure = new HabitFailure();
-
-      habitFailure.save({body: habit.reason, habit: habit, user: Parse.User.current()}).then(function() {
+      Parse.Cloud.run("createHabitFailure", {habitId: habit.id, failure: {body: habit.reason}}).then(function() {
         $scope.$apply(function() {
           habit.bad = false;
           habit.reason = '';

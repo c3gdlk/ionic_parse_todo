@@ -10,12 +10,7 @@ module.controller('SelfiesController', ['$scope', '$state', 'userAccess', functi
   userAccess.checkAndRedirect();
 
   var _loadSelfies = function() {
-    var Selfie = Parse.Object.extend('Selfie');
-    var query = new Parse.Query(Selfie);
-    query.equalTo("user", Parse.User.current());
-    query.limit(500);
-    query.find().then(function(selfies) {
-
+    Parse.Cloud.run("selfieList").then(function(selfies) {
       $scope.$apply(function() {
         self.selfies = selfies;
       })
@@ -32,17 +27,15 @@ module.controller('SelfiesController', ['$scope', '$state', 'userAccess', functi
         openedFile.file(function(fileEntry) {
           var parseFile = new Parse.File('selfie.jpg', fileEntry);
           parseFile.save().then(function() {
-            var Selfie = Parse.Object.extend('Selfie');
-            var selfie = new Selfie();
-            selfie.save({picture: parseFile, user: Parse.User.current()}).then(function(selfie) {
+            Parse.Cloud.run("createSelfie", {selfie: {picture: parseFile}}).then(function(selfie) {
               $scope.$apply(function() {
                 self.selfies.push(selfie);
               })
-            });
+            })
           })
 
-        }, function(error) {});
-      }, function(error) {});
+        }, function(error) { console.log(error)});
+      }, function(error) {console.log(error)});
     };
 
     var cbError = function(error) { console.log('cant take photo', error)}

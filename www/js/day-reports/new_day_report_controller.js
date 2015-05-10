@@ -10,16 +10,12 @@ module.controller('NewDayReportController', ['$scope', '$state', 'userAccess', '
   var self = this;
 
   var _createReport = function() {
-    var DayReport = Parse.Object.extend('DayReport');
-    var report = new DayReport();
-
-    self.newReport.user = Parse.User.current();
     self.newReport.reportedAt = blockAppUntilReport.newReportDate();
 
-    report.save(self.newReport).then(function() {
+    Parse.Cloud.run("createDayReport", {report: self.newReport}).then(function(report) {
       self.newReport = {whatDoneAndLearn: null, whatBecomesBetter: null, isPlanDone: null, whatWasBad: null};
       $state.go('app.day-reports');
-    });
+    })
   }
 
   this.createReport = function() {

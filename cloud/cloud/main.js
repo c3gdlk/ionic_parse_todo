@@ -1,6 +1,8 @@
+Parse.Cloud.useMasterKey();
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
-});
+require("cloud/authentication.js");
+require("cloud/day_reports.js");
+require("cloud/glossary.js");
+require("cloud/habits.js");
+require("cloud/selfie.js");
+require("cloud/tasks.js");

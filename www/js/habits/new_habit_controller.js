@@ -10,10 +10,7 @@ module.controller('NewHabitController', ['$scope', '$state', 'userAccess', funct
   var self = this;
 
   this.createHabit = function() {
-    var Habit = Parse.Object.extend('Habit');
-    var habit = new Habit();
-
-    habit.save({title: this.newHabit, user: Parse.User.current()}).then(function() {
+    Parse.Cloud.run("createHabit", {habit: {title: this.newHabit}}).then(function() {
       self.newHabit = '';
       $state.go('app.habits');
     });

@@ -20,11 +20,7 @@ module.factory('blockAppUntilReport', function () {
   }
 
   r.fetchLastDayReport = function(callback) {
-    var DayReport = Parse.Object.extend('DayReport');
-    var query = new Parse.Query(DayReport);
-    query.equalTo("user", Parse.User.current());
-    query.descending("reportedAt")
-    query.first().then(function(dayReport) { callback(dayReport) })
+    Parse.Cloud.run("fetchLastReport").then(function(dayReport) { callback(dayReport) })
   }
 
   r.lastReportDateWasLongTimeAgo = function(lastReportDate) {

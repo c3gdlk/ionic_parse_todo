@@ -29,9 +29,7 @@ module.controller('TasksController', ['$scope', '$state', 'userAccess', function
   var self = this;
 
   var loadTasks = function() {
-    var Task = Parse.Object.extend("Task");
-    var query = new Parse.Query(Task);
-    query.find().then(function(tasks) {
+    Parse.Cloud.run("taskList").then(function(tasks) {
       $scope.$apply(function() {
         self.tasks = tasks;
       })
@@ -39,13 +37,19 @@ module.controller('TasksController', ['$scope', '$state', 'userAccess', function
   }
 
   this.completeTask = function(task) {
-    task.set('isDone', true);
-    task.save();
+    Parse.Cloud.run("completeTask", {taskId: task.id}).then(function(_task) {
+      $scope.$apply(function() {
+        task.set('isDone', true);
+      })
+    });
   };
 
   this.uncompleteTask = function(task) {
-    task.set('isDone', false);
-    task.save();
+    Parse.Cloud.run("uncompleteTask", {taskId: task.id}).then(function(_task) {
+      $scope.$apply(function() {
+        task.set('isDone', false);
+      })
+    });
   };
 
   $scope.$on('$ionicView.enter', function () {
@@ -61,10 +65,7 @@ module.controller('NewTaskController', ['$scope', '$state', 'userAccess', functi
   var self = this;
 
   this.createPost = function() {
-    var Task = Parse.Object.extend("Task");
-    var task = new Task();
-
-    task.save(this.newTask).then(function() {
+    Parse.Cloud.run("createTask", {task: this.newTask}).then(function() {
       $state.go('app.tasks');
       self.newTask.body = '';
     });

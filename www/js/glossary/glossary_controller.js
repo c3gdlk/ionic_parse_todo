@@ -10,11 +10,7 @@ module.controller('GlossaryController', ['$scope', '$state', 'userAccess', funct
   userAccess.checkAndRedirect();
 
   var _loadGlossary = function() {
-    var Glossary = Parse.Object.extend('Glossary');
-    var query = new Parse.Query(Glossary);
-    query.equalTo("user", Parse.User.current());
-    query.limit(500);
-    query.find().then(function(glossary) {
+    Parse.Cloud.run("glossaryList").then(function(glossary) {
       for (var i in glossary) {
         glossary[i].edit = false;
         glossary[i].badWords = glossary[i].get('badWords');
@@ -36,11 +32,13 @@ module.controller('GlossaryController', ['$scope', '$state', 'userAccess', funct
   }
 
   this.update = function(glossary) {
-    glossary.set('badWords', glossary.badWords);
-    glossary.set('goodWords', glossary.goodWords);
+    var data = {badWords: glossary.badWords, goodWords: glossary.goodWords};
 
-    glossary.save().then(function() {
+    Parse.Cloud.run("updateGlossaryTerm", {id: glossary.id, glossary: data}).then(function(_glossary) {
       $scope.$apply(function() {
+        glossary.set('badWords', glossary.badWords);
+        glossary.set('goodWords', glossary.goodWords);
+
         self.cancelEdit(glossary);
       })
     })

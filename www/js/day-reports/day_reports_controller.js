@@ -10,11 +10,7 @@ module.controller('DayReportsController', ['$scope', '$state', 'userAccess', 'bl
   userAccess.checkAndRedirect();
 
   var _loadReports = function() {
-    var DayReport = Parse.Object.extend('DayReport');
-    var query = new Parse.Query(DayReport);
-    query.equalTo("user", Parse.User.current());
-    query.limit(500);
-    query.find().then(function(reports) {
+    Parse.Cloud.run("dayReportsList").then(function(reports) {
       for (var i in reports) {
         reports[i].edit = false;
         reports[i].whatDoneAndLearn  = reports[i].get('whatDoneAndLearn');
@@ -42,13 +38,16 @@ module.controller('DayReportsController', ['$scope', '$state', 'userAccess', 'bl
   }
 
   this.update = function(report) {
-    report.set('whatDoneAndLearn',  report.whatDoneAndLearn);
-    report.set('whatBecomesBetter', report.whatBecomesBetter);
-    report.set('isPlanDone',        report.isPlanDone);
-    report.set('whatWasBad',        report.whatWasBad);
+    var data = {whatDoneAndLearn: report.whatDoneAndLearn, whatBecomesBetter: report.whatBecomesBetter, isPlanDone: report.isPlanDone, whatWasBad: report.whatWasBad};
 
-    report.save().then(function() {
+    Parse.Cloud.run("updateDayReport", {id: report.id, report: data}).then(function(_report) {
       $scope.$apply(function() {
+        report.set('whatDoneAndLearn',  report.whatDoneAndLearn);
+        report.set('whatBecomesBetter', report.whatBecomesBetter);
+        report.set('isPlanDone',        report.isPlanDone);
+        report.set('whatWasBad',        report.whatWasBad);
+
+
         self.cancelEdit(report);
       })
     })
