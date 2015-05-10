@@ -4,6 +4,7 @@
 node_modules/
 platforms/
 plugins/
+cloud/config/
 
 config.xml
 www/xml/
