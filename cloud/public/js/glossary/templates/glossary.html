@@ -1,0 +1,47 @@
+<ion-view view-title="Glossary">
+
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button home-button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a href="#/glossary/new" class="button button-clear">Add Term</a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="card" ng-repeat="term in glossaryCtrl.glossary" on-hold="glossaryCtrl.startEdit(term)">
+      <div class="item item-divider">
+        I should not say this
+      </div>
+      <div class="item item-text-wrap assertive" ng-hide="term.edit">
+        {{term.get('badWords')}}
+      </div>
+      <div class="list list-inset" ng-show="term.edit">
+        <label class="item item-input">
+          <input type="text" placeholder="Bad words" ng-model="term.badWords">
+        </label>
+      </div>
+
+      <div class="item item-divider">
+        This ones much better
+      </div>
+      <div class="item item-text-wrap balanced" ng-hide="term.edit">
+        {{term.get('goodWords')}}
+      </div>
+      <div class="list list-inset" ng-show="term.edit">
+        <label class="item item-input">
+          <input type="text" placeholder="Good words" ng-model="term.goodWords">
+        </label>
+      </div>
+
+      <div class="list list-inset" ng-show="term.edit">
+        <div class="button-bar">
+          <button class="button button-block button-positive" ng-click="glossaryCtrl.update(term); $event.stopPropagation();">
+            Save
+          </button>
+          <button class="button button-block" ng-click="glossaryCtrl.cancelEdit(term); $event.stopPropagation();">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

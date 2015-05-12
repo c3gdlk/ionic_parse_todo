@@ -1,0 +1,34 @@
+<ion-view view-title="Sign Up" hide-nav-bar="true">
+
+  <ion-content>
+    <div class="card" ng-show="signUpCtrl.errors.length">
+      <div class="item item-text-wrap" >
+        {{ signUpCtrl.errors }}
+      </div>
+    </div>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input type="text" placeholder="Username" ng-model="signUpCtrl.username">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Email" ng-model="signUpCtrl.email">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password" ng-model="signUpCtrl.password">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password confirmation" ng-model="signUpCtrl.passwordConfirmation">
+      </label>
+      <button class="button button-block button-balanced" ng-click="signUpCtrl.signUp()">
+        Sign Up
+      </button>
+      <p>
+        Or just <a href="/#/sign-in">Sign In</a> with an existing account
+      </p>
+    </div>
+    <p>
+      Not implemented <a href="/#/sign-in">Sign In</a>
+    </p>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,76 @@
+<ion-view view-title="Day Reports">
+
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button home-button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a href="#/day-reports/new" class="button button-clear" ng-show="dayReportsCtrl.canCreateNewReport()">Add Report</a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="card" ng-repeat="report in dayReportsCtrl.reports" on-hold="dayReportsCtrl.startEdit(report)">
+      <div class="item item-icon-left assertive">
+        <i class="icon ion-clipboard"></i>
+        <h2>{{report.get('reportedAt') | formattedDate }}</h2>
+      </div>
+
+      <div class="item item-divider balanced">
+        What was done or learn today?
+      </div>
+      <div class="item item-text-wrap" ng-hide="report.edit">
+        {{report.get('whatDoneAndLearn')}}
+      </div>
+      <div class="list list-inset" ng-show="report.edit">
+        <label class="item item-input">
+          <textarea ng-model="report.whatDoneAndLearn" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="item item-divider royal">
+        How did you improve yours life today?
+      </div>
+      <div class="item item-text-wrap" ng-hide="report.edit">
+        {{report.get('whatBecomesBetter')}}
+      </div>
+      <div class="list list-inset" ng-show="report.edit">
+        <label class="item item-input">
+          <textarea ng-model="report.whatBecomesBetter" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="item item-divider dark">
+        Did you done yours planed tasks? Why if not
+      </div>
+      <div class="item item-text-wrap" ng-hide="report.edit">
+        {{report.get('isPlanDone')}}
+      </div>
+      <div class="list list-inset" ng-show="report.edit">
+        <label class="item item-input">
+          <textarea ng-model="report.isPlanDone" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="item item-divider assertive">
+        What was bad today? Why? How we can do this better?
+      </div>
+      <div class="item item-text-wrap" ng-hide="report.edit">
+        {{report.get('whatWasBad')}}
+      </div>
+      <div class="list list-inset" ng-show="report.edit">
+        <label class="item item-input">
+          <textarea ng-model="report.whatWasBad" rows="5"></textarea>
+        </label>
+      </div>
+
+      <div class="list list-inset" ng-show="report.edit">
+        <div class="button-bar">
+          <button class="button button-block button-positive" ng-click="dayReportsCtrl.update(report); $event.stopPropagation();">
+            Save
+          </button>
+          <button class="button button-block" ng-click="dayReportsCtrl.cancelEdit(report); $event.stopPropagation();">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
